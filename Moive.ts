@@ -35,21 +35,4 @@ export class Movie {
       discountConditions: this.#discountConditions,
     };
   }
-
-  getDiscountedPrice(screening: Screening) {
-    if (!this.#checkDiscountConditions(screening)) return this.#price;
-    if (!this.#discountPolicies) return this.#price;
-    return this.#discountPolicies.reduce((prevPrice, policy) => {
-      return policy.getDiscountedPrice(prevPrice);
-    }, this.#price);
-  }
-
-  #checkDiscountConditions(screening: Screening) {
-    return (
-      this.#discountConditions &&
-      this.#discountConditions.some((condition) => {
-        return condition.checkDiscountCondition(screening);
-      })
-    );
-  }
 }

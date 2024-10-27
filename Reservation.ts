@@ -1,4 +1,3 @@
-import { Movie } from "./Moive";
 import { Screening } from "./Screening";
 import { User } from "./User";
 
@@ -25,7 +24,30 @@ export class Reservation {
     const movie = screening.getScreening().movie;
 
     this.#basePrice = movie.getMovie().price * ticketAmount;
-    this.#discountedPrice = movie.getDiscountedPrice(screening) * ticketAmount;
+    this.#discountedPrice = this.#getDiscountedPrice(screening) * ticketAmount;
+  }
+
+  #getDiscountedPrice(screening: Screening) {
+    const { price, discountPolicies } = this.#screening
+      .getScreening()
+      .movie.getMovie();
+    if (!this.#checkDiscountConditions(screening)) return price;
+    if (!discountPolicies) return price;
+    return discountPolicies.reduce((prevPrice, policy) => {
+      return policy.getDiscountedPrice(prevPrice);
+    }, price);
+  }
+
+  #checkDiscountConditions(screening: Screening) {
+    const { discountConditions } = this.#screening
+      .getScreening()
+      .movie.getMovie();
+    return (
+      discountConditions &&
+      discountConditions.some((condition) => {
+        return condition.checkDiscountCondition(screening);
+      })
+    );
   }
 
   getReservation() {
