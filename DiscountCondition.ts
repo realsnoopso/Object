@@ -1,5 +1,3 @@
-import { Screening } from "./Screening";
-
 export type DiscountCondition =
   | DiscountSessionCondition
   | DiscountTimeCondition;
@@ -11,9 +9,9 @@ export class DiscountSessionCondition {
     this.#session = session;
   }
 
-  checkDiscountCondition(screening: Screening) {
+  checkDiscountCondition({ session }: { session: number }) {
     let condition = true;
-    if (this.#session !== screening.getScreening().session) {
+    if (this.#session !== session) {
       condition = false;
     }
     return condition;
@@ -29,9 +27,8 @@ export class DiscountTimeCondition {
     this.#startTime = startTime;
   }
 
-  checkDiscountCondition(screening: Screening) {
+  checkDiscountCondition({ date, startTime }: { date: Date; startTime: Date }) {
     let condition = true;
-    const { date, startTime } = screening.getScreening();
 
     if (this.#day) {
       condition = date.getDay() === this.#day;

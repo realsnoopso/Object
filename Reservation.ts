@@ -1,3 +1,7 @@
+import {
+  DiscountSessionCondition,
+  DiscountTimeCondition,
+} from "./DiscountCondition";
 import { Screening } from "./Screening";
 import { User } from "./User";
 
@@ -42,10 +46,21 @@ export class Reservation {
     const { discountConditions } = this.#screening
       .getScreening()
       .movie.getMovie();
+    const { session, date, startTime } = screening.getScreening();
     return (
       discountConditions &&
       discountConditions.some((condition) => {
-        return condition.checkDiscountCondition(screening);
+        if (condition instanceof DiscountSessionCondition) {
+          return condition.checkDiscountCondition({
+            session,
+          });
+        }
+        if (condition instanceof DiscountTimeCondition) {
+          return condition.checkDiscountCondition({
+            date,
+            startTime,
+          });
+        }
       })
     );
   }
