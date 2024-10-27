@@ -1,0 +1,19 @@
+{
+  "name": "object",
+  "version": "1.0.0",
+  "description": "- 사용자 - 영화: 기본 정보 - 상영: 사건 (상영 일자, 시간, 순번) - 할인 조건:   - 순서 조건: 상영 순번 이용 할인   - 기간 조건: 영화 상영 시작 시간     - 요일     - 시작 시간     - 종료 시간 - 할인 정책:   - 금액 할인 정책:   - 비율 할인 정책: %",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
