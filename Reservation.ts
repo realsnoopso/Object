@@ -26,8 +26,6 @@ export class Reservation {
 
     this.#basePrice = movie.getMovie().price * ticketAmount;
     this.#discountedPrice = movie.getDiscountedPrice(screening) * ticketAmount;
-
-    user.addReservation(this);
   }
 
   getReservation() {
@@ -39,6 +37,4 @@ export class Reservation {
       ticketAmount: this.#ticketAmount,
     };
   }
-
-  updateReservation(reservation: Reservation) {}
 }

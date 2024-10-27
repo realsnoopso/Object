@@ -1,29 +1,33 @@
 import { Movie } from "./Moive";
-import { Session } from "./Session";
 
 type ScreeningProps = {
   date: Date;
-  session: Session;
   movie: Movie;
+  session: number;
+  startTime: Date;
 };
 
 export class Screening {
   #date: Date;
-  #session: Session;
   #movie: Movie;
+  #session: number;
+  #startTime: Date;
 
   constructor({
     date,
     session,
     movie,
+    startTime,
   }: {
     date: Date;
-    session: Session;
+    session: number;
     movie: Movie;
+    startTime: Date;
   }) {
     this.#date = date;
     this.#session = session;
     this.#movie = movie;
+    this.#startTime = startTime;
   }
 
   getScreening() {
@@ -31,12 +35,7 @@ export class Screening {
       date: this.#date,
       session: this.#session,
       movie: this.#movie,
+      startTime: this.#startTime,
     };
-  }
-
-  updateScreening({ date, session, movie }: ScreeningProps) {
-    this.#date = date;
-    this.#session = session;
-    this.#movie = movie;
   }
 }
