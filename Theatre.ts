@@ -3,14 +3,33 @@ import { Screening } from "./Screening";
 import { createDate, createTime } from "./utils";
 
 type TheatreProps = {
+  movies: Movie[];
   screenings?: Screening[];
 };
 
 export class Theatre {
+  #movies: Movie[];
   #screenings: Screening[];
 
-  constructor({ movies }: TheatreProps & { movies: Movie[] }) {
+  constructor({ movies }: TheatreProps) {
+    this.#movies = movies;
     this.#screenings = this.#createScreenings(movies);
+  }
+
+  findScreening(movieName: string, date: Date, session: number) {
+    return this.#screenings.find(
+      (screening) =>
+        screening.getScreening().movie.getMovie().name === movieName &&
+        screening.getScreening().date.getFullYear() === date.getFullYear() &&
+        screening.getScreening().session === session
+    );
+  }
+
+  getTheatre() {
+    return {
+      movies: this.#movies,
+      screenings: this.#screenings,
+    };
   }
 
   #createScreenings(movies: Movie[]) {
@@ -24,21 +43,5 @@ export class Theatre {
         startTime: createTime({ hours: 10, minutes: 0 }),
       }),
     ];
-  }
-
-  findScreening(movieName: string, date: Date, session: number) {
-    // todo
-    return this.#screenings.find(
-      (screening) =>
-        screening.getScreening().movie.getMovie().name === movieName &&
-        screening.getScreening().date.getFullYear() === date.getFullYear() &&
-        screening.getScreening().session === session
-    );
-  }
-
-  getTheatre() {
-    return {
-      screenings: this.#screenings,
-    };
   }
 }

@@ -28,9 +28,6 @@ export const theatre = new Theatre({
           startTime: createTime({ hours: 18, minutes: 0 }),
         }),
       ],
-      // runtime: createTime({ hours: 1, minutes: 0 }),
-      // startDate: createDate({ year: 2024, month: 10, day: 1 }),
-      // endDate: createDate({ year: 2024, month: 10, day: 2 }),
     }),
     // new Movie({
     //   name: "타이타닉",
@@ -78,9 +75,8 @@ export const theatre = new Theatre({
   ],
 });
 
-theatre
-  .getTheatre()
-  .screenings.map((v) => console.log(v.getScreening().date.getHours()));
+theatre.getTheatre().movies.map((v) => console.log(v.getMovie()));
+theatre.getTheatre().screenings.map((v) => console.log(v.getScreening()));
 
 const user = new User({ name: "소민경" });
 
@@ -90,10 +86,10 @@ const screening = theatre.findScreening(
   1
 );
 
-new Reservation({
-  screening: screening as Screening,
-  user,
-  ticketAmount: 2,
-});
-
-user.getUser();
+console.log(
+  new Reservation({
+    screening: screening as Screening,
+    user,
+    ticketAmount: 2,
+  }).getReservation()
+);
